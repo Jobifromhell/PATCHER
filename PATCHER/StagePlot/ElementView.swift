@@ -6,6 +6,10 @@ struct ElementView: View {
     @EnvironmentObject var sharedViewModel: SharedViewModel
     @ObservedObject var viewModel: StageViewModel
 
+    var audioPatches: [AudioPatch]
+    var outputPatches: [OutputPatch]
+    
+    
     var body: some View {
         Group {
             if let element = element {

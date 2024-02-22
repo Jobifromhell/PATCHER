@@ -14,9 +14,11 @@ struct PATCHERApp: App {
 //    @StateObject var sharedData = SharedData()
 //    @StateObject var sharedViewModel = SharedViewModel()
     @State private var isImageShowing = true // Ajoutez cette ligne
+    @StateObject var sharedViewModel = SharedViewModel()
+    @StateObject var sharedData = SharedData()
 
     // Dans votre SceneDelegate.swift ou dans votre vue racine
-    let sharedViewModel = SharedViewModel() // Créez une instance de SharedViewModel
+//    let sharedViewModel = SharedViewModel() // Créez une instance de SharedViewModel
    
     var body: some Scene {
            WindowGroup {
@@ -26,6 +28,8 @@ struct PATCHERApp: App {
                        .environmentObject(projectManager)
                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
                        .environmentObject(sharedViewModel)
+                       .environmentObject(sharedData)
+
                    
                    // L'image affichée au lancement de l'application
                    if isImageShowing {
@@ -33,7 +37,7 @@ struct PATCHERApp: App {
                            .resizable()
                            .aspectRatio(contentMode: .fit)
 //                           .transition(.opacity) // Animation de transition pour l'opacité lors de l'apparition
-                           .animation(.easeInOut(duration: 2)) // Animation de disparition
+//                           .animation(.easeInOut(duration: 2)) // Animation de disparition
                            .onAppear {
                                // Après un délai de 3 secondes, l'image disparaît
                                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {

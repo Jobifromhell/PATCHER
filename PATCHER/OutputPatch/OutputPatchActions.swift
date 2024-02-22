@@ -12,8 +12,9 @@ extension OutputPatchView{
             isStereo: isStereo
         )
         updateOutputPatchDestinations(with: newPatch.destination)
-        
-           sharedViewModel.outputPatches.append(newPatch)
+        sharedViewModel.updateAvailableOutputDestinations()
+
+        sharedViewModel.outputPatches.append(newPatch)
         updatePatchNumbers()
         
         if isStereo {

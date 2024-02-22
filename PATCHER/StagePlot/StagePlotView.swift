@@ -8,17 +8,19 @@ struct StagePlotView: View {
     @EnvironmentObject var sharedViewModel: SharedViewModel
     @ObservedObject var viewModel: StageViewModel
     @State private var clearAllConfirmation = false
-//    var elements: [StageElement]
-//    @Binding var patchText: String
-
-//
-//        init(viewModel: StageViewModel) {
-//            self.viewModel = viewModel
-//        }
+    @State private var selectedElement: StageElement? = nil
     
     var body: some View {
         GeometryReader { geometry in
-            VStack{
+                   let stageCenterX = geometry.size.width / 2
+                   let stageCenterY = geometry.size.height / 2
+                   
+                   // Calculez ici le facteur d'échelle basé sur geometry.size et les dimensions initiales de la scène
+            let scaleX = geometry.size.width / viewModel.initialStageWidth
+            let scaleY = geometry.size.height / viewModel.initialStageHeight
+            let scale = min(scaleX, scaleY)
+
+            VStack(spacing: 0) {
                 HStack{
                     Text("Define stage area first!")
 //                                    .padding(5)
@@ -76,42 +78,21 @@ struct StagePlotView: View {
                         clearAllConfirmation = true
                     }
                     .padding()
-                    
-                    // Confirmation pour effacer tous les éléments
+
                     .alert(isPresented: $clearAllConfirmation) {
                         Alert(
                             title: Text("Confirm"),
                             message: Text("Do you want to erase all StagePlot data?"),
                             primaryButton: .destructive(Text("Clear")) {
-                                sharedViewModel.clearAllStageElements()
+                                viewModel.clearAllStageElements() // Correct
                             },
                             secondaryButton: .cancel()
                         )
                     }
+
                 }
                 
-//                .padding()
-
-                    ZStack {
-                        Rectangle()
-                            .fill(Color.gray.opacity(0.5))
-                            .frame(width: min(viewModel.stageWidth, geometry.size.width),
-                                   height: min(viewModel.stageHeight, geometry.size.height))
-                            .border(Color.black, width: 10)
-                        if !viewModel.stageElements.isEmpty {
-                            ForEach(viewModel.stageElements.filter { element in
-                                viewModel.categorySelections[element.type] ?? false
-                            }, id: \.id) { element in
-                                ElementView(element: Binding.constant(element), viewModel: viewModel)
-                                    .position(x: element.position(stageWidth: viewModel.stageWidth, stageHeight: viewModel.stageHeight).x,
-                                              y: element.position(stageWidth: viewModel.stageWidth, stageHeight: viewModel.stageHeight).y)
-                                    .zIndex(Double(element.zIndex))
-                                    .onTapGesture {
-                                        self.showingDetailForElement = element
-                                    }
-                            }
-                        }
-                }
+                .padding(.bottom, 0)
                 VStack {
                                    let elements = ElementType.allCases
                                    let halfwayPoint = elements.count / 2
@@ -124,7 +105,7 @@ struct StagePlotView: View {
                                            }
                                        }
                                    }
-                                   .padding(.bottom, 5)
+//                                   .padding(.bottom, 5)
                                    
                                    HStack {
                                        ForEach(Array(elements[halfwayPoint...]), id: \.self) { type in
@@ -135,29 +116,41 @@ struct StagePlotView: View {
                                        }
                                    }
                                }
-                               .padding(5)
+                ZStack {
+                                   Rectangle()
+                                       .fill(Color.gray.opacity(0.5))
+                                       // Utilisez le facteur d'échelle pour ajuster la taille du rectangle
+                                       .frame(width: viewModel.stageWidth * scale,
+                                              height: viewModel.stageHeight * scale)
+                                       // Centrez le rectangle dans la vue
+                                       .position(x: stageCenterX, y: stageCenterY)
+                                       .border(Color.black, width: 1)
+                                   
+                                   // Pour chaque élément de la scène, ajustez sa position et sa taille en utilisant scale
+                    ForEach(viewModel.stageElements.filter { viewModel.categorySelections[$0.type] ?? false }, id: \.id) { element in
+                        ElementView(element: Binding.constant(element), viewModel: viewModel, audioPatches: [], outputPatches: [])
+                            .scaleEffect(scale) // Appliquez le facteur d'échelle à l'élément
+                        // Ajustez la position de l'élément en fonction du facteur d'échelle et centrez-le
+                            .position(x: (element.position(stageWidth: viewModel.stageWidth, stageHeight: viewModel.stageHeight).x * scale) + (stageCenterX - (viewModel.stageWidth * scale / 2)),
+                                      y: (element.position(stageWidth: viewModel.stageWidth, stageHeight: viewModel.stageHeight).y * scale) + (stageCenterY - (viewModel.stageHeight * scale / 2)))
+                            .zIndex(Double(element.zIndex))
+                            .onTapGesture {
+                                self.showingDetailForElement = element                                   }
+                    }
+                }
+                Spacer()
+//                               .padding(5)
                            }
                            .onAppear()
                            .frame(width: geometry.size.width, height: geometry.size.height, alignment: .topLeading)
                            .scaledToFit()
                            .sheet(item: $showingDetailForElement) { detailElement in
-                               ElementDetailView(element: $viewModel.stageElements.first(where: { $0.id == detailElement.id })!, viewModel: viewModel)
+                               ElementDetailView(element: $viewModel.stageElements.first(where: { $0.id == detailElement.id })!, viewModel: viewModel, audioPatches: [], outputPatches: [])
                            }
+
                        }
                    }
         
-//    func saveStageElements(_ elements: [StageElement], to url: URL) {
-//        do {
-//            let encoder = JSONEncoder()
-//            let data = try encoder.encode(elements)
-//            try data.write(to: url)
-//            print("Sauvegarde réussie à \(url.path).")
-//            print("Éléments sauvegardés : \(elements)")
-//        } catch {
-//            print("Échec de la sauvegarde des éléments de la scène : \(error)")
-//        }
-//    }
-    
 
     func saveStagePlotIntoProject() {
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
@@ -178,11 +171,3 @@ struct StagePlotView: View {
 
 
 
-
-struct StagePlotView_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        StagePlotView(viewModel: StageViewModel())
-        
-    }
-}

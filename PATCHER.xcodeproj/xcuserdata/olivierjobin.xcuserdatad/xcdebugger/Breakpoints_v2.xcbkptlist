@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "E83D577E-496E-4A46-AC05-056DD51BE58A"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FE45AF53-D614-409D-B1FD-715B0366E9C4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PATCHER/OutputPatch/OutputPatchActions.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "addPatch(isStereo:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "FE45AF53-D614-409D-B1FD-715B0366E9C4 - 22c767c1d2e1cf3b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PATCHER.OutputPatchView.addPatch(isStereo: Swift.Bool) -&gt; ()"
+                  moduleName = "PATCHER"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/olivierjobin/Library/CloudStorage/Dropbox/J%20-%20Xcode/PATCHER/PATCHER/OutputPatch/OutputPatchActions.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "700">
+               </Location>
+               <Location
+                  uuid = "FE45AF53-D614-409D-B1FD-715B0366E9C4 - 22c767c1d2e1cf3b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PATCHER.OutputPatchView.addPatch(isStereo: Swift.Bool) -&gt; ()"
+                  moduleName = "PATCHER"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/olivierjobin/Library/CloudStorage/Dropbox/J%20-%20Xcode/PATCHER/PATCHER/OutputPatch/OutputPatchActions.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "708">
+               </Location>
+               <Location
+                  uuid = "FE45AF53-D614-409D-B1FD-715B0366E9C4 - 22c767c1d2e1cf58"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PATCHER.OutputPatchView.addPatch(isStereo: Swift.Bool) -&gt; ()"
+                  moduleName = "PATCHER"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/olivierjobin/Library/CloudStorage/Dropbox/J%20-%20Xcode/PATCHER/PATCHER/OutputPatch/OutputPatchActions.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "752">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A99A572F-7E7C-4A6F-847D-E06DAA0E2250"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PATCHER/StagePlot/ElementDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

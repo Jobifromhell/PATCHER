@@ -18,11 +18,6 @@
 		C90298852B82A9E2005DF62B /* PATCHERUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90298842B82A9E2005DF62B /* PATCHERUITestsLaunchTests.swift */; };
 		C90298922B82AA25005DF62B /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90298912B82AA25005DF62B /* DataModel.swift */; };
 		C90298942B82AAAF005DF62B /* StageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90298932B82AAAF005DF62B /* StageViewModel.swift */; };
-		C90298962B82AB93005DF62B /* StageViewModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90298952B82AB93005DF62B /* StageViewModelExtensions.swift */; };
-		C90298982B82AB9A005DF62B /* StageViewModelNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90298972B82AB9A005DF62B /* StageViewModelNotification.swift */; };
-		C902989A2B82ABA0005DF62B /* StageViewModelImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90298992B82ABA0005DF62B /* StageViewModelImage.swift */; };
-		C902989C2B82ABA9005DF62B /* StageViewModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C902989B2B82ABA9005DF62B /* StageViewModelData.swift */; };
-		C902989F2B82AD44005DF62B /* StageElementExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C902989E2B82AD44005DF62B /* StageElementExtensions.swift */; };
 		C90298A12B82B0F6005DF62B /* InputPatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90298A02B82B0F6005DF62B /* InputPatchView.swift */; };
 		C90298A32B82B103005DF62B /* InputPatchActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90298A22B82B103005DF62B /* InputPatchActions.swift */; };
 		C90298A52B82B10A005DF62B /* InputPatchPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90298A42B82B10A005DF62B /* InputPatchPresets.swift */; };
@@ -42,6 +37,7 @@
 		C90298C82B82BC02005DF62B /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90298C72B82BC02005DF62B /* CaptureView.swift */; };
 		C90298CB2B82BE00005DF62B /* ExportActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90298CA2B82BE00005DF62B /* ExportActions.swift */; };
 		C90298CD2B82BE58005DF62B /* CaptureActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90298CC2B82BE58005DF62B /* CaptureActions.swift */; };
+		C984E41E2B88D3DC000BE512 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984E41D2B88D3DC000BE512 /* SharedData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,11 +73,6 @@
 		C90298842B82A9E2005DF62B /* PATCHERUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PATCHERUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C90298912B82AA25005DF62B /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		C90298932B82AAAF005DF62B /* StageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageViewModel.swift; sourceTree = "<group>"; };
-		C90298952B82AB93005DF62B /* StageViewModelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageViewModelExtensions.swift; sourceTree = "<group>"; };
-		C90298972B82AB9A005DF62B /* StageViewModelNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageViewModelNotification.swift; sourceTree = "<group>"; };
-		C90298992B82ABA0005DF62B /* StageViewModelImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageViewModelImage.swift; sourceTree = "<group>"; };
-		C902989B2B82ABA9005DF62B /* StageViewModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageViewModelData.swift; sourceTree = "<group>"; };
-		C902989E2B82AD44005DF62B /* StageElementExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageElementExtensions.swift; sourceTree = "<group>"; };
 		C90298A02B82B0F6005DF62B /* InputPatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPatchView.swift; sourceTree = "<group>"; };
 		C90298A22B82B103005DF62B /* InputPatchActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPatchActions.swift; sourceTree = "<group>"; };
 		C90298A42B82B10A005DF62B /* InputPatchPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPatchPresets.swift; sourceTree = "<group>"; };
@@ -101,6 +92,7 @@
 		C90298C72B82BC02005DF62B /* CaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
 		C90298CA2B82BE00005DF62B /* ExportActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportActions.swift; sourceTree = "<group>"; };
 		C90298CC2B82BE58005DF62B /* CaptureActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureActions.swift; sourceTree = "<group>"; };
+		C984E41D2B88D3DC000BE512 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,11 +192,7 @@
 			children = (
 				C90298932B82AAAF005DF62B /* StageViewModel.swift */,
 				C90298A92B82B323005DF62B /* SharedViewModel.swift */,
-				C902989E2B82AD44005DF62B /* StageElementExtensions.swift */,
-				C90298952B82AB93005DF62B /* StageViewModelExtensions.swift */,
-				C90298972B82AB9A005DF62B /* StageViewModelNotification.swift */,
-				C90298992B82ABA0005DF62B /* StageViewModelImage.swift */,
-				C902989B2B82ABA9005DF62B /* StageViewModelData.swift */,
+				C984E41D2B88D3DC000BE512 /* SharedData.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -401,27 +389,23 @@
 			files = (
 				C90298B02B82B450005DF62B /* OutputPatchActions.swift in Sources */,
 				C90298A32B82B103005DF62B /* InputPatchActions.swift in Sources */,
-				C902989A2B82ABA0005DF62B /* StageViewModelImage.swift in Sources */,
 				C902986B2B82A9E2005DF62B /* Persistence.swift in Sources */,
 				C90298CB2B82BE00005DF62B /* ExportActions.swift in Sources */,
 				C90298AA2B82B323005DF62B /* SharedViewModel.swift in Sources */,
 				C90298942B82AAAF005DF62B /* StageViewModel.swift in Sources */,
 				C90298C42B82B98F005DF62B /* ElementType.swift in Sources */,
 				C90298BA2B82B87C005DF62B /* StagePlotView.swift in Sources */,
-				C902989C2B82ABA9005DF62B /* StageViewModelData.swift in Sources */,
-				C90298962B82AB93005DF62B /* StageViewModelExtensions.swift in Sources */,
 				C90298C02B82B899005DF62B /* ElementHelpers.swift in Sources */,
 				C90298642B82A9E1005DF62B /* ContentView.swift in Sources */,
 				C90298BE2B82B891005DF62B /* ElementDetailView.swift in Sources */,
 				C90298B52B82B6FB005DF62B /* ProjectManagerAction.swift in Sources */,
-				C90298982B82AB9A005DF62B /* StageViewModelNotification.swift in Sources */,
 				C90298B32B82B6E2005DF62B /* ProjectManagerView.swift in Sources */,
 				C90298BC2B82B886005DF62B /* ElementView.swift in Sources */,
 				C90298622B82A9E1005DF62B /* PATCHERApp.swift in Sources */,
+				C984E41E2B88D3DC000BE512 /* SharedData.swift in Sources */,
 				C90298922B82AA25005DF62B /* DataModel.swift in Sources */,
 				C90298A52B82B10A005DF62B /* InputPatchPresets.swift in Sources */,
 				C90298AC2B82B42F005DF62B /* OutputPatchView.swift in Sources */,
-				C902989F2B82AD44005DF62B /* StageElementExtensions.swift in Sources */,
 				C90298AE2B82B43D005DF62B /* OutputPatchPresets.swift in Sources */,
 				C90298CD2B82BE58005DF62B /* CaptureActions.swift in Sources */,
 				C90298C82B82BC02005DF62B /* CaptureView.swift in Sources */,

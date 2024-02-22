@@ -3,7 +3,7 @@ import SwiftUI
 struct OutputPatchView:  View {
     @EnvironmentObject var sharedViewModel: SharedViewModel
     @Binding var outputPatches: [OutputPatch]
-//    @State   var availableDestinations: [String] = []
+    @State   var availableDestinations: [String] = []
     @State   var newBusType: String = "BUS"
     @State   var newDestination: String = "DESTINATION"
     @State   var newMonitorType: String = "TYPE"
@@ -14,7 +14,7 @@ struct OutputPatchView:  View {
     @State   var wedge: Wedge?
     @State   var iem: IEM?
 
-    @StateObject private var stageViewModel = StageViewModel()
+    @StateObject private var stageViewModel = StageViewModel(audioPatches: [], outputPatches: [], stageElements: [])
 
     let monitorTypes = ["WEDGE", "IEM", "SIDE", "DRUM FILL", "DRUM SUB", "AUX","LINE","FULL RANGE", "PA"]
     let busTypes = ["AUX","CUE","MATRIX", "DIRECT OUT", "TIE LINE", "MIX"]

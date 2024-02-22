@@ -2,14 +2,16 @@ import Foundation
 import SwiftUI
 
 class SharedViewModel: ObservableObject {
-//    @Published var audioPatches: [AudioPatch] = []
-//    @Published var outputPatches: [OutputPatch] = []
-//    @Published var availableDestinations: [String] = []{
-//        didSet {
-//            // Mettez à jour les destinations disponibles lorsque les outputPatches sont modifiés
-//            fetchOutputPatchDestinations()
-//        }
-//    }
+    @Published var audioPatches: [AudioPatch] = []
+    @Published var outputPatches: [OutputPatch] = []
+    @Published var availableOutputDestinations: [String] = []
+    @Published var selectedInputPatch: AudioPatch?
+    @Published var availableDestinations: [String] = []{
+        didSet {
+            // Mettez à jour les destinations disponibles lorsque les outputPatches sont modifiés
+            fetchOutputPatchDestinations()
+        }
+    }
     @Published var outputPatchDestinations: [String] = []{
         didSet {
             // Mettez à jour les destinations disponibles lorsque les outputPatches sont modifiés
@@ -18,26 +20,6 @@ class SharedViewModel: ObservableObject {
     }
 //    @Published var destinationOptions: [String] = []
 
-      
-    @Published var outputPatches: [OutputPatch] = [] 
-//    {
-//           didSet {
-//               // Mettez à jour les destinations disponibles lorsque les outputPatches sont modifiés
-//               fetchOutputPatchDestinations()
-//           }
-//       }
-    @Published var audioPatches: [AudioPatch] = [] 
-//    {
-//        didSet {
-//            self.objectWillChange.send()
-//            print("Audio patches updated:")
-//            for patch in audioPatches {
-//                print("Patch: \(patch.patchNumber), Source: \(patch.source), Mic/DI: \(patch.micDI), Stand: \(patch.stand), Phantom: \(patch.phantom), Group: \(patch.group)")
-//            }
-//
-//        OPTION MAJ AFFICHAGE
-//        }
-//    }
     @Published var patchIndicator = 0
     @Published var stageElements: [StageElement] = []
     @Published var filteredStageElements: [StageElement] = []
@@ -54,11 +36,11 @@ class SharedViewModel: ObservableObject {
     }
     let groupOptions = (65...90).map { String(UnicodeScalar($0)) } // Génère un tableau de "A" à "Z"
 
-//    // Cette fonction retourne les numéros de patch pour un groupe donné
-//    func patchNumbers(forGroup group: String) -> [Int] {
-//        let filteredPatches = audioPatches.filter { $0.group == group }
-//        return filteredPatches.map { $0.patchNumber }
-//    }
+    // Cette fonction retourne les numéros de patch pour un groupe donné
+    func patchNumbers(forGroup group: String) -> [Int] {
+        let filteredPatches = audioPatches.filter { $0.group == group }
+        return filteredPatches.map { $0.patchNumber }
+    }
     // Une fonction pour mettre à jour les éléments filtrés basée sur le groupe sélectionné
     
     func clearAllStageElements() {
@@ -102,9 +84,9 @@ class SharedViewModel: ObservableObject {
         }
         // Cela déclenchera la mise à jour des vues observant filteredStageElements
     }
-    func patchNumbers(forGroup group: String) -> [Int] {
-           audioPatches.filter { $0.group == group }.map { $0.patchNumber }
-       }
+//    func patchNumbers(forGroup group: String) -> [Int] {
+//           audioPatches.filter { $0.group == group }.map { $0.patchNumber }
+//       }
    
 
     
@@ -138,6 +120,10 @@ class SharedViewModel: ObservableObject {
         // Remplacez audioPatches par la version mise à jour
         audioPatches = updatedPatches
     }
+      func updateAvailableOutputDestinations() {
+          let destinations = outputPatches.map { $0.destination }
+          availableOutputDestinations = Array(Set(destinations)) // Pour éliminer les doublons
+      }
 
 //    func addNewPatch() {
 //        let newPatch = AudioPatch(patchNumber: nextPatchNumber, source: "", micDI: "", stand: "", phantom: false, group: selectedGroup ?? "")

@@ -10,10 +10,8 @@ import AppKit
 
 struct ContentView: View {
     @EnvironmentObject var projectManager: ProjectManager
-//    @EnvironmentObject var sharedViewModel: SharedViewModel
-        @StateObject private var stageViewModel = StageViewModel()
-    @State private var selectedProject: Project? = nil // Adjusted to be optional
-//    @State private var stagePlotImage: NSImage? = nil
+    @StateObject private var stageViewModel = StageViewModel(audioPatches: [], outputPatches: [], stageElements: [])
+    @State private var selectedProject: Project? = nil
     @State private var currentProject: Project? = nil
     
         var audioPatches: [AudioPatch] {
@@ -53,6 +51,7 @@ struct ContentView: View {
                 
                 
                 StagePlotView(viewModel: stageViewModel)
+                
                     .tabItem {
                         Label("STAGEPLOT", systemImage: "gear")
                     }
@@ -65,6 +64,8 @@ struct ContentView: View {
                            currentProject: $projectManager.selectedProject,
                            stageViewModel: stageViewModel)
                                     .environmentObject(SharedViewModel())
+                                    .environmentObject(projectManager)
+
                 .tabItem {
                     Label("EXPORT", systemImage: "square.and.arrow.up")
                 }

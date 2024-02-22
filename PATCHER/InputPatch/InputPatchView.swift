@@ -3,7 +3,7 @@ import SwiftUI
 struct InputPatchView: View {
     @EnvironmentObject var sharedViewModel: SharedViewModel
     @Binding var audioPatches: [AudioPatch] // Déclarez audioPatches comme une variable liée
-
+    @EnvironmentObject var sharedData: SharedData
     //    @EnvironmentObject var projectManager: ProjectManager
 
     let locationOptions = ["STAGE", "MON", "FOH", "OTHER"]
@@ -18,7 +18,7 @@ struct InputPatchView: View {
     @State var showingClearConfirmation = false
     @State var selectedGroup = ""
 
-    @StateObject private var stageViewModel = StageViewModel()
+    @StateObject private var stageViewModel = StageViewModel(audioPatches: [], outputPatches: [], stageElements: [])
 
 //       init(audioPatches: [AudioPatch]) { // Ajoutez cet initialiseur
 //           self.audioPatches = audioPatches
@@ -50,7 +50,7 @@ struct InputPatchView: View {
 //                    sharedViewModel.audioPatches[index] = updatedPatch
                     Label("Add an input", systemImage: "plus")
                 }
-                Button(action: sharedViewModel.updatePatchNumbers) {
+                Button(action: /*sharedViewModel.*/updatePatchNumbers) {
                     Label("Refresh Patch", systemImage: "plus")
                 }
                 Button("Clear all") {
@@ -64,7 +64,7 @@ struct InputPatchView: View {
                         message: Text("Erase all Input Patch data?"),
                         primaryButton: .destructive(Text("Clear")) {
                             withAnimation {
-                                sharedViewModel.audioPatches.removeAll()
+                                /*sharedViewModel*/audioPatches.removeAll()
 //                                audioPatches.removeAll()
                             }
                         },
@@ -74,7 +74,7 @@ struct InputPatchView: View {
             }
             HStack{
                 
-                Button("DRUM KIT") {
+                Button("DRUM") {
                     self.loadDrumKitPreset()
                 }
                 //                .padding()
@@ -116,8 +116,8 @@ struct InputPatchView: View {
             
             List {
                 ForEach(audioPatches.indices, id: \.self) { index in
-                    if index < sharedViewModel.audioPatches.count {
-                        let patch = sharedViewModel.audioPatches[index]
+                    if index < /*sharedViewModel*//*.*/audioPatches.count {
+                        let patch = /*sharedViewModel*//*.*/audioPatches[index]
                         HStack {
                             Button(action: { self.deleteItem(patch: patch) }) {
                                 Image(systemName: "xmark.circle")
@@ -125,7 +125,7 @@ struct InputPatchView: View {
                             .frame(width: 35)
                             .buttonStyle(BorderlessButtonStyle())
                             
-                            Picker("", selection: $sharedViewModel.audioPatches[index].group) {
+                            Picker("", selection: /*$sharedViewModel*//*$.*/$audioPatches[index].group) {
                                 ForEach(groupOptions, id: \.self) { group in
                                     Text(group).tag(group as String?) // Cast explicite vers String
                                 }
@@ -137,17 +137,17 @@ struct InputPatchView: View {
                             }
                             
                             Text("\(patch.patchNumber)").frame(width: 60)
-                            TextField("Source", text: $sharedViewModel.audioPatches[index].source)
-                            TextField("Mic/DI", text: $sharedViewModel.audioPatches[index].micDI)
+                            TextField("Source", text: /*sharedViewModel*//*.*/$audioPatches[index].source)
+                            TextField("Mic/DI", text: /*$sharedViewModel*//*.*/$audioPatches[index].micDI)
                                 .frame(width: 50)
-                            Picker("", selection: $sharedViewModel.audioPatches[index].stand) {
+                            Picker("", selection: /*$sharedViewModel*/$audioPatches[index].stand) {
                                 ForEach(standOptions, id: \.self) { option in
                                     Text(option).tag(option)
                                 }
                             }
                             .pickerStyle(PopUpButtonPickerStyle())
-                            Toggle("+48V", isOn: $sharedViewModel.audioPatches[index].phantom)
-                            Picker("", selection: $sharedViewModel.audioPatches[index].location) {
+                            Toggle("+48V", isOn: /*$sharedViewModel*/$audioPatches[index].phantom)
+                            Picker("", selection: /*$sharedViewModel*/$audioPatches[index].location) {
                                 ForEach(locationOptions, id: \.self) { option in
                                     Text(option).tag(option)
                                 }
@@ -165,38 +165,41 @@ struct InputPatchView: View {
         }
     func addNewItem() {
         withAnimation {
+            print("Audio Patches before adding new item: \(audioPatches)")
+            
             let newPatch = AudioPatch(patchNumber: nextPatchNumber, source: newInstrument, micDI: newMic, stand: newMicStand, phantom: newPhantom, group: selectedGroup)
             audioPatches.append(newPatch)
             sharedViewModel.audioPatches.append(newPatch)
-
-            // Assurez-vous que cette fonction met à jour correctement les numéros de patch dans sharedViewModel
             sharedViewModel.updatePatchNumbers()
+            
+            print("Audio Patches local after adding new item: \(audioPatches)")
+            print("Audio Patches sharedViewModel after adding new item: \(sharedViewModel.audioPatches)")
+
+            updatePatchNumbers()
             // Réinitialisation des champs après l'ajout
             newInstrument = ""
             newMic = ""
             newMicStand = ""
             newPhantom = false
-            selectedGroup = "A"
-            selectedLocation = "STAGE"
-            let currentMaxPatchNumber = sharedViewModel.audioPatches.max(by: { $0.patchNumber < $1.patchNumber })?.patchNumber ?? 0
-//            audioPatches.append(newPatch)
-            sharedViewModel.audioPatches.append(newPatch)
-
-//                  sharedViewModel.updatePatchNumbers()
-             
+            selectedGroup = ""
+            selectedLocation = ""
+            let currentMaxPatchNumber = /*sharedViewModel.*/audioPatches.max(by: { $0.patchNumber < $1.patchNumber })?.patchNumber ?? 0
+////                        audioPatches.append(newPatch)
+//                        sharedViewModel.audioPatches.append(newPatch)
         }
     }
 
-
-    
     func move(from source: IndexSet, to destination: Int) {
+        audioPatches.move(fromOffsets: source, toOffset: destination)
+        updatePatchNumbers()
         sharedViewModel.audioPatches.move(fromOffsets: source, toOffset: destination)
-        // Mettre à jour les données de patch
-        sharedViewModel.updatePatchNumbers() // Ajoutez cet appel
+        sharedViewModel.updatePatchNumbers()
         
     }
     func delete(at offsets: IndexSet) {
         audioPatches.remove(atOffsets: offsets)
+        sharedViewModel.audioPatches.remove(atOffsets: offsets)
+
     }
 
 //    func delete(offsets: IndexSet) {
@@ -208,24 +211,28 @@ struct InputPatchView: View {
             if let index = audioPatches.firstIndex(where: { $0.id == patch.id }) {
                 /*sharedViewModel.*/audioPatches.remove(at: index)
                 // Appel à la fonction pour mettre à jour les numéros de patch
+                updatePatchNumbers()
                 sharedViewModel.updatePatchNumbers()
+
             }
         }
     }
 
     func updatePatchNumbers() {
+        print("Audio Patches before updating patch numbers: \(audioPatches)")
+
         // Parcours toutes les lignes d'entrée et met à jour les numéros de patch en fonction de l'ordre actuel
         for index in audioPatches.indices {
-            sharedViewModel.audioPatches[index].patchNumber = index + 1
+            audioPatches[index].patchNumber = index + 1
         }
         // Ajouter un print pour vérifier
-        print("Patch numbers updated: \(audioPatches)")
+        print("Audio Patches after updating patch numbers: \(audioPatches)")
     }
 
 
 
     func updateGroupSelection(newGroup: String) {
-        sharedViewModel.selectedGroup = newGroup
+        selectedGroup = newGroup
     }
     
 }

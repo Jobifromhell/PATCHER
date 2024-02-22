@@ -1,204 +1,237 @@
-////
-////  ExportActions.swift
-////  PATCHER
-////
-////  Created by Olivier Jobin on 18/02/2024.
-////
-//import SwiftUI
-//import Foundation
-//import AppKit
-//
-//extension ExportView {
-//    func saveProjectChanges() {
-//        // Vérifiez d'abord si vous pouvez obtenir l'index du projet actuel
-//        if let projectIndex = projectManager.savedProjects.firstIndex(where: { $0.id == currentProject?.id }) {
-//            // Ensuite, faites une copie du projet que vous pouvez modifier
-//            var projectToUpdate = projectManager.savedProjects[projectIndex]
-//
-//            // Appliquez vos mises à jour à cette copie
-//            projectToUpdate.audioPatches = self.audioPatches
-//            projectToUpdate.outputPatches = self.outputPatches
-//            projectToUpdate.stageElements = self.stageViewModel.stageElements
-//
-//            // Réassignez la copie mise à jour au tableau original
-//            projectManager.savedProjects[projectIndex] = projectToUpdate
-//
-//            // Log pour confirmer les mises à jour
-//            print("Projet \(projectToUpdate.projectName) sauvegardé avec \(projectToUpdate.stageElements.count) éléments de scène.")
-//
-//            // Persistez les modifications
-//            projectManager.saveProjectsToUserDefaults()
-//        } else {
-//            // Gérez le cas où le projet actuel n'est pas trouvé dans le tableau
-//            print("Projet actuel non trouvé dans la liste des projets sauvegardés.")
-//        }
-//    }
-//    func drawStageElement(_ element: StageElement, in image: NSImage, size: CGSize) {
-//        let position = CGPoint(x: element.positionXPercent * size.width, y: element.positionYPercent * size.height)
-//        let color = getColor(for: element.type) // Assurez-vous que cette méthode retourne NSColor
-//        let path = NSBezierPath() // Utilisez la forme appropriée en fonction du type d'élément
-//        
-//        // Exemple de dessin d'un élément carré
-//        let elementSize: CGFloat = 50 // Taille de l'élément, à ajuster selon le type
-//        let rect = CGRect(x: position.x - elementSize / 2, y: position.y - elementSize / 2, width: elementSize, height: elementSize)
-//        path.appendRect(rect)
-//        
-//        color.setFill()
-//        path.fill()
-//    }
-//    
-//    func getColor(for type: ElementType) -> NSColor {
-//        switch type {
-//            // Exemple de couleurs pour différents types, ajustez selon vos besoins
-//        case .riser2x2, .riser3x2, .riser2x1, .riser4x3 /*.amplifier, .keys*/:
-//            return NSColor.gray
-//        case .powerOutlet, .patchBox:
-//            return NSColor.orange
-//        case .source, .musician:
-//            return NSColor.black
-//        case .wedge:
-//            return NSColor.green
-//        case .iem:
-//            return NSColor.blue
-//        }
-//    }
-//    
-//    
-//    func drawProjectName(on image: NSImage, projectName: String, in size: CGSize) {
-//        let attrs: [NSAttributedString.Key: Any] = [
-//            .font: NSFont.systemFont(ofSize: 20),
-//            .foregroundColor: NSColor.black
-//        ]
-//        
-//        let string = NSString(string: projectName)
-//        let stringSize = string.size(withAttributes: attrs)
-//        let stringRect = CGRect(x: (size.width - stringSize.width) / 2, y: size.height - stringSize.height - 20, width: stringSize.width, height: stringSize.height)
-//        string.draw(in: stringRect, withAttributes: attrs)
-//    }
-//    func renderViewToImage<T: View>(_ view: T, size: CGSize) -> NSImage {
-//        let hostingView = NSHostingView(rootView: view)
-//        hostingView.frame = CGRect(origin: .zero, size: size)
-//        hostingView.wantsLayer = true
-//        
-//        let image = NSImage(size: size)
-//        image.lockFocus()
-//        
-//        // Dessiner un fond blanc avec CGContext
-//        if let context = NSGraphicsContext.current?.cgContext {
-//            context.setFillColor(NSColor.white.cgColor)
-//            context.fill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
-//            
-//            let attributes = [
-//                NSAttributedString.Key.font: NSFont.systemFont(ofSize: 12),
-//                NSAttributedString.Key.foregroundColor: NSColor.black
-//            ]
-//            var yOffset = size.height - 20 // Commencez par le haut de l'image et ajustez selon vos besoins
-//            
-//            for patch in audioPatches {
-//                let string = "Location: \(patch.location), Patch No: \(patch.patchNumber), Source: \(patch.source), Mic/DI: \(patch.micDI), Stand: \(patch.stand), Phantom: \(patch.phantom ? "Yes" : "No")"
-//                let attrString = NSAttributedString(string: string, attributes: attributes)
-//                attrString.draw(at: CGPoint(x: 10, y: yOffset))
-//                yOffset -= 20 // Ajustez cette valeur pour espacer les lignes
-//            }
-//        }
-//        image.unlockFocus()
-//        return image
-//    }
-//    //    func createPDF(from image: NSImage) -> Data? {
-//    //        let pdfData = NSMutableData()
-//    //        let pdfConsumer = CGDataConsumer(data: pdfData as CFMutableData)!
-//    //        var mediaBox = CGRect(origin: .zero, size: image.size)
-//    //        guard let pdfContext = CGContext(consumer: pdfConsumer, mediaBox: &mediaBox, nil) else { return nil }
-//    //
-//    //        pdfContext.beginPDFPage(nil)
-//    //        // Définir un fond blanc
-//    //        pdfContext.setFillColor(CGColor.white)
-//    //        pdfContext.fill(mediaBox)
-//    //        // Dessiner l'image
-//    //        guard let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else { return nil }
-//    //        pdfContext.draw(cgImage, in: mediaBox)
-//    //        pdfContext.endPDFPage()
-//    //        pdfContext.closePDF()
-//    //
-//    //        return pdfData as Data
-//    //    }
-//    //    func saveImageWithPanel(pdfImage: NSImage) {
-//    //        let savePanel = NSSavePanel()
-//    //        savePanel.allowedFileTypes = ["png"]
-//    //        savePanel.canCreateDirectories = true
-//    //        savePanel.showsTagField = false
-//    //        savePanel.title = "Save Image"
-//    //        savePanel.message = "Choose a location to save the image."
-//    //        savePanel.nameFieldStringValue = "ExportedImage.png"
-//    //        savePanel.directoryURL = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first
-//    //
-//    //        savePanel.begin { response in
-//    //            if response == .OK, let url = savePanel.url {
-//    //                do {
-//    //                    guard let tiffData = pdfImage.tiffRepresentation,
-//    //                          let bitmapImage = NSBitmapImageRep(data: tiffData),
-//    //                          let pngData = bitmapImage.representation(using: .png, properties: [:]) else { return }
-//    //
-//    //                    try pngData.write(to: url)
-//    //                    print("Image saved at: \(url.path)")
-//    //                } catch {
-//    //                    print("Error saving image: \(error)")
-//    //                }
-//    //            }
-//    //        }
-//    //    }
-//    //    func showSavePanel() {
-//    //        let savePanel = NSSavePanel()
-//    //        savePanel.allowedFileTypes = ["png"]
-//    //        savePanel.canCreateDirectories = true
-//    //        savePanel.showsTagField = false
-//    //        savePanel.title = "Sauvegarder l'image"
-//    //        savePanel.message = "Choisissez l'emplacement pour sauvegarder l'image."
-//    //        savePanel.nameFieldStringValue = "ImageExportée.png"
-//    //        savePanel.directoryURL = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first
-//    //
-//    //        savePanel.begin { response in
-//    //            if response == .OK, let url = savePanel.url {
-//    //                // Ici, vous sauvegardez vos données à l'URL sélectionnée
-//    //                // Par exemple, sauvegarder une image
-//    //                //                saveImageToDisk(image: renderViewToImage(), at: url)
-//    //            }
-//    //        }
-//    //    }
-//}
-////struct PDFViewer: NSViewRepresentable {
-////    var pdfDocument: PDFDocument
-////
-////    func makeNSView(context: Context) -> PDFView {
-////        let pdfView = PDFView()
-////        pdfView.document = pdfDocument
-////        pdfView.autoScales = true
-////        return pdfView
-////    }
-////    func updateNSView(_ nsView: PDFView, context: Context) {}
-////}
-//struct ExportView_Previews: PreviewProvider {
-//    @State static var sampleProject: Project? = nil
-//    @StateObject var stageViewModel = StageViewModel()
-//    static var previews: some View {
-//        
-//        let previewViewModel = StageViewModel()
-//        return ExportView(
-//            audioPatches: [],
-//            outputPatches: [],
-//            stageElements: [],
-//            currentProject: $sampleProject,
-//            stageViewModel: previewViewModel // Pass the instance here
-//        )
-//        .environmentObject(ProjectManager.shared)
-//        .environmentObject(SharedData())
-//    }
-//}
-//
-//
-//extension NSImage {
-//    func asImage() -> Image {
-//        Image(nsImage: self)
-//    }
-//}
-//
+import SwiftUI
+import Foundation
+import AppKit
+
+extension ExportView {
+    
+    func createAndShowPDF() {
+        let pdfData = generatePDFData()
+        let savePanel = NSSavePanel()
+        savePanel.allowedFileTypes = ["pdf"]
+        savePanel.canCreateDirectories = true
+        savePanel.showsTagField = false
+        savePanel.title = "Save PDF"
+        savePanel.message = "Choose a location to save the PDF file."
+        savePanel.nameFieldStringValue = "ExportedFile.pdf"
+        savePanel.directoryURL = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first
+        
+        savePanel.begin { response in
+            if response == .OK, let url = savePanel.url {
+                do {
+                    try pdfData.write(to: url)
+                    print("PDF saved at: \(url.path)")
+                } catch {
+                    print("Error saving PDF: \(error)")
+                }
+            }
+        }
+    }
+    
+    func generatePDFData() -> Data {
+        let pdfData = NSMutableData()
+        var totalPatchRows = audioPatches.count + outputPatches.count // Nombre total de lignes de patch
+        
+        // Calcul de la hauteur des cellules de tableau
+         let cellHeight: CGFloat = 25 // Vous devez ajuster cette valeur en fonction de votre mise en page
+
+        // Utilisons les dimensions d'une page A4 standard pour le PDF
+           let pageWidth: CGFloat = 595.2 // A4 width in points
+           let pageHeight: CGFloat = 841.8 // A4 height in points
+
+           // Créez la page PDF avec les dimensions A4
+           let pdfConsumer = CGDataConsumer(data: pdfData)!
+           var mediaBox = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
+           guard let pdfContext = CGContext(consumer: pdfConsumer, mediaBox: &mediaBox, nil) else {
+               fatalError("Failed to create PDF context")
+           }
+
+           pdfContext.beginPDFPage(nil)
+           let context = NSGraphicsContext(cgContext: pdfContext, flipped: false)
+           NSGraphicsContext.current = context
+
+           // Position de départ pour le dessin des tables
+           let startYPosition: CGFloat = pageHeight - 150 // Commencez à dessiner 100 points à partir du haut de la page
+        Text ("INPUT PATCH")
+           drawHeader(context: pdfContext, pageWidth: pageWidth)
+
+           // Dessinez le tableau des patchs audio d'entrée avec les intitulés de colonnes
+           drawAudioPatchTable(at: CGPoint(x: 30, y: startYPosition), withColumnTitles: ["From", "", "Source", "Mic/DI", "Stand", "+48V"])
+
+           // Calculez la nouvelle position Y après avoir dessiné la première table
+           let newStartPositionY = startYPosition - CGFloat(audioPatches.count) * cellHeight - 40 // 40 points d'espacement entre les tables
+
+           // Vérifiez que la nouvelle position Y est positive pour éviter de dessiner en dehors de la page
+           guard newStartPositionY > 0 else {
+               fatalError("La table des patchs audio dépasse la hauteur de la page")
+           }
+        Text ("OUTPUT PATCH")
+
+           // Dessinez le tableau des patchs de sortie avec les intitulés de colonnes
+           drawOutputPatchTable(at: CGPoint(x: 30, y: newStartPositionY), withColumnTitles: ["", "Bus", "Destination", "Monitor Type"])
+
+           drawFooter(context: pdfContext, pageWidth: pageWidth, pageHeight: pageHeight)
+
+           pdfContext.endPDFPage()
+           pdfContext.closePDF()
+
+           return pdfData as Data
+       }
+    func drawHeader(context: CGContext, pageWidth: CGFloat) {
+        let headerText = "DEMO PROJECT" as NSString
+        let headerAttributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont.boldSystemFont(ofSize: 18),
+            .foregroundColor: NSColor.black
+        ]
+        let headerSize = headerText.size(withAttributes: headerAttributes)
+        let headerRect = CGRect(x: (pageWidth - headerSize.width) / 2, y: 750, width: headerSize.width, height: headerSize.height)
+        headerText.draw(in: headerRect, withAttributes: headerAttributes)
+    }
+    
+    func drawFooter(context: CGContext, pageWidth: CGFloat, pageHeight: CGFloat) {
+           let footerText = "Made with PATCHER" as NSString
+           let footerAttributes: [NSAttributedString.Key: Any] = [
+               .font: NSFont.systemFont(ofSize: 12),
+               .foregroundColor: NSColor.black
+           ]
+           let footerSize = footerText.size(withAttributes: footerAttributes)
+           let footerRect = CGRect(x: 10, y: 10, width: footerSize.width, height: footerSize.height)
+           footerText.draw(in: footerRect, withAttributes: footerAttributes)
+       }
+    func drawAudioPatchTable(at startPoint: CGPoint, withColumnTitles columnTitles: [String]) {
+        var columnWidths: [CGFloat] = [35, 30, 80, 60, 70, 40] // Défaut pour chaque colonne
+        let cellHeight: CGFloat = 25
+        
+        // Dessiner les intitulés de colonnes
+        var currentX = startPoint.x
+            for (index, title) in columnTitles.enumerated() {
+                let width = columnWidths[index]
+                let rect = CGRect(x: currentX, y: startPoint.y, width: width, height: cellHeight)
+                title.draw(in: rect, withAttributes: [.font: NSFont.boldSystemFont(ofSize: 12)])
+                currentX += width + 20 // Ajoutez un espacement supplémentaire pour séparer les colonnes
+            }
+        
+        // Calculer la largeur maximale pour chaque colonne en fonction du texte le plus long
+        // Utilisez audioPatches pour les patchs d'entrée
+        for patch in audioPatches {
+            let strings = [patch.location, "\(patch.patchNumber)", patch.source, patch.micDI, patch.stand, patch.phantom ? "+48V" : ""]
+            for (index, string) in strings.enumerated() {
+                let size = string.size(withAttributes: [.font: NSFont.systemFont(ofSize: 12)])
+                columnWidths[index] = max(columnWidths[index], size.width + 20) // Ajoutez une marge pour un meilleur aspect visuel
+            }
+        }
+        
+        var currentY = startPoint.y - cellHeight // Déplacez-vous vers le haut pour dessiner les données
+        for patch in audioPatches {
+            currentX = startPoint.x // Réinitialiser la position horizontale pour dessiner les données de chaque patch
+            let strings = [patch.location, "\(patch.patchNumber)", patch.source, patch.micDI, patch.stand, patch.phantom ? "Yes" : "No"]
+            for (index, string) in strings.enumerated() {
+                let rect = CGRect(x: currentX, y: currentY, width: columnWidths[index], height: cellHeight)
+                string.draw(in: rect, withAttributes: [.font: NSFont.systemFont(ofSize: 12)])
+                currentX += columnWidths[index]
+            }
+            currentY -= cellHeight
+        }
+    }
+
+    func drawOutputPatchTable(at startPoint: CGPoint, withColumnTitles columnTitles: [String]) {
+        var columnWidths: [CGFloat] = [15, 25, 90, 80] // Défaut pour chaque colonne
+        let cellHeight: CGFloat = 25
+        
+        // Dessiner les intitulés de colonnes
+        var currentX = startPoint.x
+            for (index, title) in columnTitles.enumerated() {
+                let width = columnWidths[index]
+                let rect = CGRect(x: currentX, y: startPoint.y, width: width, height: cellHeight)
+                title.draw(in: rect, withAttributes: [.font: NSFont.boldSystemFont(ofSize: 12)])
+                currentX += width + 20 // Ajoutez un espacement supplémentaire pour séparer les colonnes
+            }
+        
+        // Utilisez outputPatches pour les patchs de sortie
+        for patch in outputPatches {
+            let strings = ["\(patch.patchNumber)", patch.busType, patch.destination, patch.monitorType]
+            for (index, string) in strings.enumerated() {
+                let size = string.size(withAttributes: [.font: NSFont.systemFont(ofSize: 12)])
+                columnWidths[index] = max(columnWidths[index], size.width + 20) // Ajoutez une marge pour un meilleur aspect visuel
+            }
+        }
+        
+        var currentY = startPoint.y - cellHeight // Déplacez-vous vers le haut pour dessiner les données
+        for patch in outputPatches {
+            currentX = startPoint.x // Réinitialiser la position horizontale pour dessiner les données de chaque patch
+            let strings = ["\(patch.patchNumber)", patch.busType, patch.destination, patch.monitorType]
+            for (index, string) in strings.enumerated() {
+                let rect = CGRect(x: currentX, y: currentY, width: columnWidths[index], height: cellHeight)
+                string.draw(in: rect, withAttributes: [.font: NSFont.systemFont(ofSize: 12)])
+                currentX += columnWidths[index]
+            }
+            currentY -= cellHeight
+        }
+    }
+
+
+    
+    
+    // Dessine les données pour un patch audio spécifique
+    func drawAudioPatch(_ patch: AudioPatch, at startPoint: CGPoint) {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 12),
+            .foregroundColor: NSColor.black
+        ]
+        
+        var currentX = startPoint.x
+        let cellWidth: CGFloat = 100 // Largeur de cellule de base
+        
+        let locationString = NSAttributedString(string: patch.location, attributes: attributes)
+        let patchNoString = NSAttributedString(string: "\(patch.patchNumber)", attributes: attributes)
+        let sourceString = NSAttributedString(string: patch.source, attributes: attributes)
+        let micDIString = NSAttributedString(string: patch.micDI, attributes: attributes)
+        let standString = NSAttributedString(string: patch.stand, attributes: attributes)
+        let phantomString = NSAttributedString(string: patch.phantom ? "+48" : "", attributes: attributes)
+        
+        let strings = [locationString, patchNoString, sourceString, micDIString, standString, phantomString]
+        
+        var maxWidth: CGFloat = 0 // Pour stocker la largeur maximale de la cellule
+        
+        for string in strings {
+            let size = string.size() // Taille du texte
+            maxWidth = max(maxWidth, size.width) // Mettre à jour la largeur maximale
+        }
+        
+        for string in strings {
+            string.draw(at: CGPoint(x: currentX, y: startPoint.y))
+            currentX += maxWidth + 20 // Ajouter un espace après chaque cellule
+        }
+    }
+
+  
+        
+    // Dessine les données pour un patch de sortie spécifique
+    func drawOutputPatch(_ patch: OutputPatch, at startPoint: CGPoint) {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 12),
+            .foregroundColor: NSColor.black
+        ]
+        
+        var currentX = startPoint.x
+        let cellWidth: CGFloat = 100 // Largeur de cellule de base
+        
+        let patchNoString = NSAttributedString(string: "Patch No: \(patch.patchNumber)", attributes: attributes)
+        let typeString = NSAttributedString(string: "Type: \(patch.busType)", attributes: attributes)
+        let destinationString = NSAttributedString(string: "Destination: \(patch.destination)", attributes: attributes)
+        let monitorType = NSAttributedString (string: "Type: \(patch.monitorType)",attributes: attributes)
+                                              
+        let strings = [patchNoString, typeString, destinationString]
+        
+        var maxWidth: CGFloat = 0 // Pour stocker la largeur maximale de la cellule
+        
+        for string in strings {
+            let size = string.size() // Taille du texte
+            maxWidth = max(maxWidth, size.width) // Mettre à jour la largeur maximale
+        }
+        
+        for string in strings {
+            string.draw(at: CGPoint(x: currentX, y: startPoint.y))
+            currentX += maxWidth + 20 // Ajouter un espace après chaque cellule
+        }
+    }
+}

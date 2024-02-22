@@ -17,7 +17,7 @@ struct Project: Codable, Identifiable {
     var creationDate: Date
 }
 
-struct AudioPatch: Identifiable, Codable, Equatable, Comparable, Hashable {
+struct AudioPatch: Identifiable, Codable, Equatable, Comparable, Hashable, PatchProtocol {
     var id: UUID = UUID()
     var patchNumber: Int
     var source: String
@@ -27,14 +27,13 @@ struct AudioPatch: Identifiable, Codable, Equatable, Comparable, Hashable {
     var clampAccessory: String?
     var location: String = ""
     var group: String
-
     
     static func < (lhs: AudioPatch, rhs: AudioPatch) -> Bool {
         lhs.patchNumber < rhs.patchNumber
     }
 }
 
-struct OutputPatch: Identifiable, Codable, Equatable, Comparable, Hashable {
+struct OutputPatch: Identifiable, Codable, Equatable, Comparable, Hashable, PatchProtocol {
     var id: UUID = UUID()
     var patchNumber: Int
     var busType: String
@@ -43,7 +42,8 @@ struct OutputPatch: Identifiable, Codable, Equatable, Comparable, Hashable {
     var isStereo: Bool
     var location: String = ""
     var isFirstInStereoPair: Bool = true
-    
+    var outputPatchDestinations: String?
+
     static func < (lhs: OutputPatch, rhs: OutputPatch) -> Bool {
         lhs.patchNumber < rhs.patchNumber
     }
@@ -146,4 +146,7 @@ struct IEM {
 struct Side {
     var output: String
     // Autres propriétés et méthodes
+}
+protocol PatchProtocol {
+    var patchNumber: Int { get }
 }

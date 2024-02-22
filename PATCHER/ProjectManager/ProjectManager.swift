@@ -14,7 +14,7 @@ class ProjectManager: ObservableObject {
             }
         }
     }
-    var stageViewModel: StageViewModel = StageViewModel()
+    var stageViewModel: StageViewModel = StageViewModel(audioPatches: [], outputPatches: [], stageElements: [])
     
      let projectsKey = "projects"
      let userDefaults = UserDefaults.standard
