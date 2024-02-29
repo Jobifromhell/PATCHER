@@ -49,7 +49,18 @@ struct StagePlotView: View {
                     //                    )) {
                     //                        Text("Audio Sources")
                     //                    }
-                    
+                    Toggle(isOn: Binding(
+                        get: { self.viewModel.categorySelections[.source] ?? false },
+                        set: { self.viewModel.categorySelections[.source] = $0 }
+                    )) {
+                        Text("Source")
+                    }
+                    Toggle(isOn: Binding(
+                        get: { self.viewModel.categorySelections[.musician] ?? false },
+                        set: { self.viewModel.categorySelections[.musician] = $0 }
+                    )) {
+                        Text("Musician")
+                    }
                     Toggle(isOn: Binding(
                         get: { self.viewModel.categorySelections[.patchBox] ?? false },
                         set: { self.viewModel.categorySelections[.patchBox] = $0 }
@@ -129,6 +140,9 @@ struct StagePlotView: View {
                                    // Pour chaque élément de la scène, ajustez sa position et sa taille en utilisant scale
                     ForEach(viewModel.stageElements.filter { viewModel.categorySelections[$0.type] ?? false }, id: \.id) { element in
                         ElementView(element: Binding.constant(element), viewModel: viewModel, audioPatches: [], outputPatches: [])
+                            // Ici, appliquez la logique de formatage à `element.patch` avant de l'afficher
+                    
+
                             .scaleEffect(scale) // Appliquez le facteur d'échelle à l'élément
                         // Ajustez la position de l'élément en fonction du facteur d'échelle et centrez-le
                             .position(x: (element.position(stageWidth: viewModel.stageWidth, stageHeight: viewModel.stageHeight).x * scale) + (stageCenterX - (viewModel.stageWidth * scale / 2)),

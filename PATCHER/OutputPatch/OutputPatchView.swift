@@ -20,20 +20,24 @@ struct OutputPatchView:  View {
     let busTypes = ["AUX","CUE","MATRIX", "DIRECT OUT", "TIE LINE", "MIX"]
     
       var nextPatchNumber: Int {
-        (outputPatches.last?.patchNumber ?? 0) + 1
+          (sharedViewModel.outputPatches.last?.patchNumber ?? 0) + 1
     }
     
     var body: some View {
         
         VStack {
             HStack {
-                Button(action: {
+                Button(action: 
+                        {
                     self.addNewItem(isStereo: false)
                 }) {
                     Label("Add an output", systemImage: "plus")
                 }
                 .frame(alignment: .center)
                 .padding()
+                Button(action: sharedViewModel.updatePatchNumbers) {
+                    Label("Refresh Patch", systemImage: "plus")
+                }
                 Button("Clear all") {
                     showingClearConfirmation = true
                 }
@@ -43,7 +47,7 @@ struct OutputPatchView:  View {
                         message: Text("Erase all Output Patch data?"),
                         primaryButton: .destructive(Text("Clear")) {
                             withAnimation {
-                                outputPatches.removeAll()
+                                sharedViewModel.outputPatches.removeAll()
                             }
                         },
                         secondaryButton: .cancel()
@@ -74,9 +78,9 @@ struct OutputPatchView:  View {
                 }
             }
             List {
-                ForEach($outputPatches) { $patch in
+                ForEach($sharedViewModel.outputPatches) { $patch in
                     HStack {
-                        Button(action: { self.delete(at: IndexSet([outputPatches.firstIndex(of: patch)!])) }) {
+                        Button(action: { self.delete(at: IndexSet([sharedViewModel.outputPatches.firstIndex(of: patch)!])) }) {
                             Image(systemName: "xmark.circle")
                         }
                         .buttonStyle(BorderlessButtonStyle())
@@ -97,7 +101,7 @@ struct OutputPatchView:  View {
                                     // Pour les secondes lignes des sorties stéréo, nous ne montrons rien ou nous montrons un Toggle désactivé
                                     Toggle("Stereo", isOn: .constant(false))
                                         .disabled(true) // Le Toggle est désactivé et ne peut pas être modifié
-                                        .hidden() // Le Toggle est complètement caché dans l'UI
+//                                        .hidden() // Le Toggle est complètement caché dans l'UI
                                 }
                         TextField("Destination", text: $patch.destination)
                             .textFieldStyle(.plain)

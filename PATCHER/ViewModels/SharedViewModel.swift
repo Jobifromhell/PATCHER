@@ -8,19 +8,16 @@ class SharedViewModel: ObservableObject {
     @Published var selectedInputPatch: AudioPatch?
     @Published var availableDestinations: [String] = []{
         didSet {
-            // Mettez à jour les destinations disponibles lorsque les outputPatches sont modifiés
             fetchOutputPatchDestinations()
         }
     }
     @Published var outputPatchDestinations: [String] = []{
         didSet {
-            // Mettez à jour les destinations disponibles lorsque les outputPatches sont modifiés
             fetchOutputPatchDestinations()
         }
     }
 //    @Published var destinationOptions: [String] = []
-
-    @Published var patchIndicator = 0
+//    @Published var patchIndicator = 0
     @Published var stageElements: [StageElement] = []
     @Published var filteredStageElements: [StageElement] = []
 
@@ -110,26 +107,24 @@ class SharedViewModel: ObservableObject {
     func updatePatchNumbers() {
         // Créez une copie mutable de audioPatches
         var updatedPatches = audioPatches
-        
+        var updatedOutputPatches = outputPatches
+
         // Parcours toutes les lignes d'entrée et met à jour les numéros de patch en fonction de l'ordre actuel
         for (index, _) in updatedPatches.enumerated() {
             updatedPatches[index].patchNumber = index + 1
+        }
+        for (index, _) in updatedOutputPatches.enumerated() {
+            updatedOutputPatches[index].patchNumber = index + 1
         }
         self.objectWillChange.send()
 
         // Remplacez audioPatches par la version mise à jour
         audioPatches = updatedPatches
+        outputPatches = updatedOutputPatches
+
     }
       func updateAvailableOutputDestinations() {
           let destinations = outputPatches.map { $0.destination }
           availableOutputDestinations = Array(Set(destinations)) // Pour éliminer les doublons
       }
-
-//    func addNewPatch() {
-//        let newPatch = AudioPatch(patchNumber: nextPatchNumber, source: "", micDI: "", stand: "", phantom: false, group: selectedGroup ?? "")
-//        audioPatches.append(newPatch)
-//        self.objectWillChange.send()
-//
-//    }
-
 }

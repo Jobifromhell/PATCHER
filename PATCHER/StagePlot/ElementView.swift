@@ -33,8 +33,8 @@ struct ElementView: View {
                             .foregroundColor(.white)
                             .lineLimit(1)
                             .truncationMode(.tail)
-                        if !element.patch.isEmpty {
-                            Text(element.patch)
+//                        if !element.patch.isEmpty {
+                        Text(element.patch)
                                 .font(.caption)
                                 .foregroundColor(.white)
                                 .lineLimit(1)
@@ -45,7 +45,7 @@ struct ElementView: View {
                             .foregroundColor(.white)
                             .lineLimit(1)
                             .truncationMode(.tail)
-                    }
+//                    }
                     .frame(maxWidth: .infinity) // Allow text to extend beyond the bounds
                 }
                 .offset(dragOffset)

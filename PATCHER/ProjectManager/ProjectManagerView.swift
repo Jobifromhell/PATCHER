@@ -9,40 +9,41 @@ struct ProjectManagerView: View {
     @State  var editingProjectName: String = ""
     @State  var isEditing: Bool = false
     @State  var editingProjectId: UUID?
-    
-    
-    // Utilisez l'EnvironmentObject pour accéder à ProjectManager
+        
     @EnvironmentObject var projectManager: ProjectManager
-    
-    // Liste des projets sauvegardés
-//    @ObservedObject var savedProjects: ProjectManager = ProjectManager.shared
+    @EnvironmentObject var sharedViewModel : SharedViewModel
+    @ObservedObject var savedProjects: ProjectManager = ProjectManager.shared
     
     var body: some View {
         VStack {
+            if let selectedProjectName = projectManager.selectedProject?.projectName {
+                           Text("Current Project: \(selectedProjectName)")
+                               .font(.title)
+                               .padding()
+                               .opacity(50)
+                       }
             TextField("Enter Project Name", text: $projectName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
-            Button("Create Project") {
-                guard !projectName.isEmpty else { return }
-                let newProject = Project(projectName: projectName, audioPatches: [], outputPatches: [], stageElements: [], creationDate: Date())
-                projectManager.saveProject(newProject)
-                // Charger immédiatement le projet nouvellement créé
-                projectManager.selectedProject = newProject
+            HStack{
                 
-                projectName = ""
-                showSaveConfirmation = true
+                
+                Button("Create Project") {
+                    guard !projectName.isEmpty else { return }
+                    let newProject = Project(projectName: projectName, audioPatches: [], outputPatches: [], stageElements: [], creationDate: Date())
+                    projectManager.saveProject(newProject)
+                    // Charger immédiatement le projet nouvellement créé
+                    projectManager.selectedProject = newProject
+                    
+                    projectName = ""
+                    showSaveConfirmation = true
+                }
+                
+                .alert(isPresented: $showSaveConfirmation) {
+                    Alert(title: Text("Project Saved"), message: Text("Let's go patching."), dismissButton: .default(Text("OK")))
+                }
             }
-            
-            //            .alert(isPresented: $showSaveConfirmation) {
-            //                Alert(title: Text("Project Saved"), message: Text("Your project has been saved successfully."), dismissButton: .default(Text("OK")))
-            //            }
-            
-            //            Button("Check Saved Projects") {
-            //                let savedProjects = projectManager.getSavedProjects()
-            //                print("Saved Projects: \(savedProjects)")
-            //            }
-            //
             List(projectManager.getSavedProjects().sorted(by: { $0.creationDate > $1.creationDate })) { project in
                 HStack {
                     if isEditing && editingProjectId == project.id {
@@ -89,10 +90,4 @@ struct ProjectManagerView: View {
         }
     }
 }
-struct ProjectManagerView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProjectManagerView()
-            .environmentObject(ProjectManager.shared)
-        
-    }
-}
+

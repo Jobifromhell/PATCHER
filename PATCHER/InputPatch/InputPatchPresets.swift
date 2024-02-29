@@ -29,7 +29,7 @@ extension InputPatchView {
             AudioPatch(patchNumber: currentMaxPatchNumber + 16, source: "SPDS R", micDI: "DI", stand: "GROUND", phantom: true, location: "STAGE", group: "A")
             
         ]
-        audioPatches.append(contentsOf:drumKitPreset)
+//        audioPatches.append(contentsOf:drumKitPreset)
         sharedViewModel.audioPatches.append(contentsOf: drumKitPreset)
 
     }
@@ -39,7 +39,7 @@ extension InputPatchView {
             AudioPatch(patchNumber: currentMaxPatchNumber + 1, source: "BASS DI", micDI: "DI", stand: "GROUND", phantom: true, location: "STAGE", group: "B"),
             AudioPatch(patchNumber: currentMaxPatchNumber + 2, source: "BASS MIC", micDI: "M88", stand: "SMALL", phantom: false, location: "STAGE", group: "B"),
         ]
-        audioPatches.append(contentsOf:bassKitPreset)
+//        audioPatches.append(contentsOf:bassKitPreset)
         sharedViewModel.audioPatches.append(contentsOf: bassKitPreset)
     }
     
@@ -54,7 +54,7 @@ extension InputPatchView {
             AudioPatch(patchNumber: currentMaxPatchNumber + 6, source: "GTR DI 2", micDI: "DI", stand: "GROUND", phantom: true, location: "STAGE", group: "F"),
             
         ]
-        audioPatches.append(contentsOf:gtrampKitPreset)
+//        audioPatches.append(contentsOf:gtrampKitPreset)
         sharedViewModel.audioPatches.append(contentsOf: gtrampKitPreset)
 
     }
@@ -66,7 +66,7 @@ extension InputPatchView {
             AudioPatch(patchNumber: currentMaxPatchNumber + 3, source: "KEY 2 LEFT", micDI: "DI", stand: "GROUND", phantom: true, location: "STAGE", group: "G"),
             AudioPatch(patchNumber: currentMaxPatchNumber + 4, source: "KEY 2 RIGHT", micDI: "DI", stand: "GROUND", phantom: true, location: "STAGE", group: "G")
         ]
-        audioPatches.append(contentsOf:keyKitPreset)
+//        audioPatches.append(contentsOf:keyKitPreset)
         sharedViewModel.audioPatches.append(contentsOf: keyKitPreset)
         
     }
@@ -79,7 +79,7 @@ extension InputPatchView {
             AudioPatch(patchNumber: currentMaxPatchNumber + 4, source: "BACKING VOCAL 3", micDI: "SM58", stand: "TALL", phantom: false, location: "STAGE", group: "I"),
             
         ]
-        audioPatches.append(contentsOf:vocalKitPreset)
+//        audioPatches.append(contentsOf:vocalKitPreset)
         sharedViewModel.audioPatches.append(contentsOf: vocalKitPreset)
     }
       func loadHornSectionPreset() {
@@ -90,7 +90,7 @@ extension InputPatchView {
             AudioPatch(patchNumber: currentMaxPatchNumber + 3, source: "Sax Alto", micDI: "DPA4099", stand: "SAX/TPT STC4099", phantom: true, location: "STAGE", group: "J"),
             AudioPatch(patchNumber: currentMaxPatchNumber + 4, source: "Sax Tenor", micDI: "MD421", stand: "TALL", phantom: false, location: "STAGE", group: "J"),
         ]
-        audioPatches.append(contentsOf:hornSectionPreset)
+//        audioPatches.append(contentsOf:hornSectionPreset)
         sharedViewModel.audioPatches.append(contentsOf: hornSectionPreset)
     }
       func loadDjPreset() {
@@ -100,7 +100,7 @@ extension InputPatchView {
             AudioPatch(patchNumber: currentMaxPatchNumber + 2, source: "DJ LEFT", micDI: "DI", stand: "GROUND", phantom: true, location: "STAGE", group: "K"),
             AudioPatch(patchNumber: currentMaxPatchNumber + 3, source: "DJ BOOTH", micDI: "DI", stand: "GROUND", phantom: true, location: "STAGE", group: "K"),
         ]
-        audioPatches.append(contentsOf:djPreset)
+//        audioPatches.append(contentsOf:djPreset)
         sharedViewModel.audioPatches.append(contentsOf: djPreset)
     }
     

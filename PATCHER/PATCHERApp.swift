@@ -36,11 +36,11 @@ struct PATCHERApp: App {
                        Image("PATCHER1200")
                            .resizable()
                            .aspectRatio(contentMode: .fit)
-//                           .transition(.opacity) // Animation de transition pour l'opacité lors de l'apparition
-//                           .animation(.easeInOut(duration: 2)) // Animation de disparition
+                           .transition(.opacity) // Animation de transition pour l'opacité lors de l'apparition
+                           .animation(.easeInOut(duration: 1)) // Animation de disparition
                            .onAppear {
                                // Après un délai de 3 secondes, l'image disparaît
-                               DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                               DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                    withAnimation {
                                        isImageShowing = false
                                    }

@@ -4,6 +4,7 @@ import AppKit
 
 extension ExportView {
     
+    
     func createAndShowPDF() {
         let pdfData = generatePDFData()
         let savePanel = NSSavePanel()
@@ -29,7 +30,7 @@ extension ExportView {
     
     func generatePDFData() -> Data {
         let pdfData = NSMutableData()
-        var totalPatchRows = audioPatches.count + outputPatches.count // Nombre total de lignes de patch
+        var totalPatchRows = sharedViewModel.audioPatches.count + sharedViewModel.outputPatches.count // Nombre total de lignes de patch
         
         // Calcul de la hauteur des cellules de tableau
          let cellHeight: CGFloat = 25 // Vous devez ajuster cette valeur en fonction de votre mise en page
@@ -58,7 +59,7 @@ extension ExportView {
            drawAudioPatchTable(at: CGPoint(x: 30, y: startYPosition), withColumnTitles: ["From", "", "Source", "Mic/DI", "Stand", "+48V"])
 
            // Calculez la nouvelle position Y après avoir dessiné la première table
-           let newStartPositionY = startYPosition - CGFloat(audioPatches.count) * cellHeight - 40 // 40 points d'espacement entre les tables
+        let newStartPositionY = startYPosition - CGFloat(sharedViewModel.audioPatches.count) * cellHeight - 40 // 40 points d'espacement entre les tables
 
            // Vérifiez que la nouvelle position Y est positive pour éviter de dessiner en dehors de la page
            guard newStartPositionY > 0 else {
@@ -112,7 +113,7 @@ extension ExportView {
         
         // Calculer la largeur maximale pour chaque colonne en fonction du texte le plus long
         // Utilisez audioPatches pour les patchs d'entrée
-        for patch in audioPatches {
+        for patch in sharedViewModel.audioPatches {
             let strings = [patch.location, "\(patch.patchNumber)", patch.source, patch.micDI, patch.stand, patch.phantom ? "+48V" : ""]
             for (index, string) in strings.enumerated() {
                 let size = string.size(withAttributes: [.font: NSFont.systemFont(ofSize: 12)])
@@ -121,7 +122,7 @@ extension ExportView {
         }
         
         var currentY = startPoint.y - cellHeight // Déplacez-vous vers le haut pour dessiner les données
-        for patch in audioPatches {
+        for patch in sharedViewModel.audioPatches {
             currentX = startPoint.x // Réinitialiser la position horizontale pour dessiner les données de chaque patch
             let strings = [patch.location, "\(patch.patchNumber)", patch.source, patch.micDI, patch.stand, patch.phantom ? "Yes" : "No"]
             for (index, string) in strings.enumerated() {

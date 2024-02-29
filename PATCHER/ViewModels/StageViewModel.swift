@@ -9,7 +9,8 @@ import SwiftUI
 import AppKit
 
 class StageViewModel: ObservableObject {
-    
+    @EnvironmentObject var sharedViewModel: SharedViewModel
+
     @Published var availableOutputs: [String] = ["Output1", "Output2", "Output3"]
     
     @Published var selectedElementTypes: Set<ElementType> = Set(ElementType.allCases)

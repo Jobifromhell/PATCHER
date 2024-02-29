@@ -7,69 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "FE45AF53-D614-409D-B1FD-715B0366E9C4"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PATCHER/OutputPatch/OutputPatchActions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "addPatch(isStereo:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "FE45AF53-D614-409D-B1FD-715B0366E9C4 - 22c767c1d2e1cf3b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "PATCHER.OutputPatchView.addPatch(isStereo: Swift.Bool) -&gt; ()"
-                  moduleName = "PATCHER"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/olivierjobin/Library/CloudStorage/Dropbox/J%20-%20Xcode/PATCHER/PATCHER/OutputPatch/OutputPatchActions.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "19"
-                  endingLineNumber = "19"
-                  offsetFromSymbolStart = "700">
-               </Location>
-               <Location
-                  uuid = "FE45AF53-D614-409D-B1FD-715B0366E9C4 - 22c767c1d2e1cf3b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "PATCHER.OutputPatchView.addPatch(isStereo: Swift.Bool) -&gt; ()"
-                  moduleName = "PATCHER"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/olivierjobin/Library/CloudStorage/Dropbox/J%20-%20Xcode/PATCHER/PATCHER/OutputPatch/OutputPatchActions.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "19"
-                  endingLineNumber = "19"
-                  offsetFromSymbolStart = "708">
-               </Location>
-               <Location
-                  uuid = "FE45AF53-D614-409D-B1FD-715B0366E9C4 - 22c767c1d2e1cf58"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "PATCHER.OutputPatchView.addPatch(isStereo: Swift.Bool) -&gt; ()"
-                  moduleName = "PATCHER"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/olivierjobin/Library/CloudStorage/Dropbox/J%20-%20Xcode/PATCHER/PATCHER/OutputPatch/OutputPatchActions.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "20"
-                  endingLineNumber = "20"
-                  offsetFromSymbolStart = "752">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "A99A572F-7E7C-4A6F-847D-E06DAA0E2250"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -81,6 +18,54 @@
             endingLineNumber = "47"
             landmarkName = "body"
             landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EA0B28F5-7356-4FA1-A1D0-22DAF36A12DB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PATCHER/StagePlot/ElementView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "EA0B28F5-7356-4FA1-A1D0-22DAF36A12DB - 76b5a13911350348"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.rotationEffect(_: SwiftUI.Angle, anchor: SwiftUI.UnitPoint) -&gt; some&gt;&gt;.0, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.truncationMode(SwiftUI.Text.TruncationMode) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.truncationMode(SwiftUI.Text.TruncationMode) -&gt; some&gt;&gt;.0)&gt;&gt;, &lt;&lt;opaque return type of SwiftUI.View.frame(minWidth: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, idealWidth: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, maxWidth: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, minHeight: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, idealHeight: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, maxHeight: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, alignment: SwiftUI.Alignment) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.gesture&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.Gesture&gt;(_: &#x3c4;_1_0, including: SwiftUI.GestureMask) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onDisappear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0&gt; in PATCHER.ElementView.body.getter : some"
+                  moduleName = "PATCHER"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/olivierjobin/Library/CloudStorage/Dropbox/J%20-%20Xcode/PATCHER/PATCHER/StagePlot/ElementView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "2244">
+               </Location>
+               <Location
+                  uuid = "EA0B28F5-7356-4FA1-A1D0-22DAF36A12DB - 3eb8b8b172d69e7d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.truncationMode(SwiftUI.Text.TruncationMode) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.truncationMode(SwiftUI.Text.TruncationMode) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.rotationEffect(_: SwiftUI.Angle, anchor: SwiftUI.UnitPoint) -&gt; some&gt;&gt;.0, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.truncationMode(SwiftUI.Text.TruncationMode) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.truncationMode(SwiftUI.Text.TruncationMode) -&gt; some&gt;&gt;.0)&gt;&gt;, &lt;&lt;opaque return type of SwiftUI.View.frame(minWidth: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, idealWidth: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, maxWidth: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, minHeight: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, idealHeight: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, maxHeight: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, alignment: SwiftUI.Alignment) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.gesture&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.Gesture&gt;(_: &#x3c4;_1_0, including: SwiftUI.GestureMask) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onDisappear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0&gt; in PATCHER.ElementView.body.getter : some"
+                  moduleName = "PATCHER"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/olivierjobin/Library/CloudStorage/Dropbox/J%20-%20Xcode/PATCHER/PATCHER/StagePlot/ElementView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "372">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -61,7 +61,7 @@ struct ElementDetailView: View {
             }
             if isWedgeOrIEM {
                 Picker("Destination", selection: $element.patch) {
-                    ForEach(availableDestinations, id: \.self) { destination in
+                    ForEach(sharedViewModel.availableDestinations, id: \.self) { destination in
                         Text(destination)
                     }
                 }
@@ -70,11 +70,21 @@ struct ElementDetailView: View {
             TextField("Detail", text: $element.detail)
             TextField("Patch", text: $patchText)
                 .onAppear {
-                    patchText = formatPatchNumbersForGroup(element.group)
+                    // Assurez-vous que cette partie récupère correctement les numéros de patch basés sur le groupe et les passe à la fonction de formatage
+                    if let group = element.group, !group.isEmpty {
+                        let patchNumbers = sharedViewModel.patchNumbers(forGroup: group) // Ceci devrait retourner un [Int]
+                        // Formater les numéros de patch en intervalles et mettre à jour `patchText`
+                        patchText = formatPatchNumbersAsIntervals(patchNumbers)
+                    } else {
+                        // Gérer le cas où le groupe est nul ou vide
+                        patchText = "No patches"
+                    }
+                    
                     // Ajoutez des déclarations print() pour vérifier l'accessibilité des données
                     print("Selected Input Patch: \(sharedViewModel.selectedInputPatch?.patchNumber ?? -1)")
                     print("Available Output Destinations: \(sharedViewModel.availableOutputDestinations)")
                 }
+
             Slider(value: $element.rotation.degrees, in: 0...360, step: 1) {
                 Text("Rotation")
             }
@@ -102,20 +112,38 @@ struct ElementDetailView: View {
         .padding()
     }
     
-    private func formatPatchNumbersForGroup(_ group: String?) -> String {
-        guard let group = group else { return "" }
-        
-        // Obtenez les numéros de patch pour le groupe donné à partir de sharedViewModel
-        let patchNumbers = sharedViewModel.patchNumbers(forGroup: group)
-        
-        // Triez les numéros de patch dans l'ordre croissant
+    private func formatPatchNumbersAsIntervals(_ patchNumbers: [Int]) -> String {
+        guard !patchNumbers.isEmpty else { return "" }
+
         let sortedPatchNumbers = patchNumbers.sorted()
-        
-        // Formatez les numéros de patch sous forme de chaîne séparée par des virgules
-        let patchNumbersString = sortedPatchNumbers.map(String.init).joined(separator: ", ")
-        
-        return patchNumbersString
+        var intervals = [(start: Int, end: Int)]()
+        var currentInterval = (start: sortedPatchNumbers.first!, end: sortedPatchNumbers.first!)
+
+        for patchNumber in sortedPatchNumbers.dropFirst() {
+            if patchNumber - currentInterval.end > 1 {
+                // Si le patchNumber actuel n'est pas consécutif, sauvegardez l'intervalle actuel et commencez-en un nouveau
+                intervals.append(currentInterval)
+                currentInterval = (start: patchNumber, end: patchNumber)
+            } else {
+                // Si le patchNumber est consécutif, mettez à jour la fin de l'intervalle actuel
+                currentInterval.end = patchNumber
+            }
+        }
+        // Ajoutez le dernier intervalle restant
+        intervals.append(currentInterval)
+
+        // Transformez les intervalles en chaînes de caractères
+        let intervalStrings = intervals.map { interval -> String in
+            if interval.start == interval.end {
+                return "\(interval.start)"
+            } else {
+                return "\(interval.start)-\(interval.end)"
+            }
+        }
+
+        return intervalStrings.joined(separator: ", ")
     }
+
     
     
     

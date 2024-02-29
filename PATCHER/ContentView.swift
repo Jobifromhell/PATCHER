@@ -13,12 +13,16 @@ struct ContentView: View {
     @StateObject private var stageViewModel = StageViewModel(audioPatches: [], outputPatches: [], stageElements: [])
     @State private var selectedProject: Project? = nil
     @State private var currentProject: Project? = nil
-    
+
         var audioPatches: [AudioPatch] {
             sharedViewModel.audioPatches
         }
-    let sharedViewModel = SharedViewModel() // Créez une instance de SharedViewModel
-
+    @EnvironmentObject var sharedViewModel: SharedViewModel
+//    @StateObject var sharedViewModel = SharedViewModel() // Use @StateObject for ownership
+//    @ObservedObject var sharedViewModel = SharedViewModel()
+//    var sharedViewModel = SharedViewModel()
+   
+    
     var body: some View {
         TabView {
             
@@ -63,8 +67,8 @@ struct ContentView: View {
                            stageElements: projectManager.selectedProject?.stageElements ?? [],
                            currentProject: $projectManager.selectedProject,
                            stageViewModel: stageViewModel)
-                                    .environmentObject(SharedViewModel())
-                                    .environmentObject(projectManager)
+//                                    .environmentObject(SharedViewModel())
+//                                    .environmentObject(projectManager)
 
                 .tabItem {
                     Label("EXPORT", systemImage: "square.and.arrow.up")
@@ -72,25 +76,12 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            // Directly call captureView() on stageViewModel and assign the result
-            //            let capturedImage = stageViewModel.captureView()
-            //            // Convert NSImage to Image (SwiftUI) if needed for UI display
-            //            self.stagePlotImage = capturedImage
+           
             if let selectedProject = projectManager.selectedProject {
                 stageViewModel.load(from: selectedProject)
             }
         }
+        .environmentObject(sharedViewModel)
+        .environmentObject(projectManager)
     }
 }
-
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let projectManager = ProjectManager.shared
-//        let sharedViewModel = SharedViewModel() // Ajoutez cette ligne pour créer une instance de SharedViewModel
-//        return ContentView()
-//            .environmentObject(projectManager)
-//            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-//            .environmentObject(sharedViewModel) // Ajoutez sharedViewModel à l'environnement
-//        
-//    }
-//}

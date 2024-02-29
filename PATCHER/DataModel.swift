@@ -17,7 +17,7 @@ struct Project: Codable, Identifiable {
     var creationDate: Date
 }
 
-struct AudioPatch: Identifiable, Codable, Equatable, Comparable, Hashable, PatchProtocol {
+struct AudioPatch: Identifiable, Codable, Equatable, Comparable, Hashable, PatchProtocol, Observable {
     var id: UUID = UUID()
     var patchNumber: Int
     var source: String

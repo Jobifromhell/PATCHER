@@ -3,26 +3,34 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 class ProjectManager: ObservableObject {
-    @EnvironmentObject var sharedViewModel: SharedViewModel
-    static let shared = ProjectManager()
+    
+    var sharedViewModel: SharedViewModel
+    static let shared: ProjectManager = {
+           let viewModel = SharedViewModel() // Create a default or shared instance
+           return ProjectManager(sharedViewModel: viewModel)
+       }()
     @Published var savedProjects: [Project] = []
     @Published var selectedProject: Project? {
         didSet {
             if let selectedProject = selectedProject {
                 stageViewModel.load(from: selectedProject)
-                NotificationCenter.default.post(name: Notification.Name("ProjectSelected"), object: nil, userInfo: ["project": selectedProject])
+                sharedViewModel.audioPatches = selectedProject.audioPatches
+                sharedViewModel.outputPatches = selectedProject.outputPatches
+                sharedViewModel.stageElements = selectedProject.stageElements
             }
         }
     }
+
     var stageViewModel: StageViewModel = StageViewModel(audioPatches: [], outputPatches: [], stageElements: [])
     
      let projectsKey = "projects"
      let userDefaults = UserDefaults.standard
      let key = "SavedProjects"
     
-    
-    init() {
-        loadProjects()
+    init(sharedViewModel: SharedViewModel) {
+            self.sharedViewModel = sharedViewModel
+            loadProjects()
+            // Further initialization
         
         // Chargez les projets sauvegardés lors de l'initialisation
         if let encodedData = userDefaults.data(forKey: key) {
@@ -34,8 +42,6 @@ class ProjectManager: ObservableObject {
             }
         }
     }
-    
-   
 }
 
 
